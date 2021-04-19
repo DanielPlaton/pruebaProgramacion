@@ -51,7 +51,7 @@ public class PersonaDAO extends Conexion {
 					.prepareStatement("Select * from personas where id_ciudad=" + idciudad);
 
 			rsObj = pstmtObj.executeQuery();
-
+		
 			while (rsObj.next()) {
 				p = new Persona();
 				p.setId(rsObj.getInt("id"));
@@ -60,13 +60,15 @@ public class PersonaDAO extends Conexion {
 				p.setTipo(rsObj.getString("Tipo"));
 				p.setInfectado(rsObj.getInt("Infectado"));
 				listaPersonas.add(p);
+		
 			}
+			Main.logger.info("Recorriendo lista de personas ");
 
 			
 			printDbStatus();
 		} catch (SQLException ex) {
 		//	Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
-
+			Main.logger.info("Error excepcion SQL "+ex);
 			
 		} finally {
 			desconectar();
@@ -98,6 +100,8 @@ public class PersonaDAO extends Conexion {
 					pa.setTipo(rsObj.getString("Tipo"));
 					pa.setInfectado(rsObj.getInt("Infectado"));
 					listaPersonas.add(pa);
+					
+				Main.logger.info("Añadiendo a la lista los pacientes "+e.getId());
 
 				} else if (rsObj.getString("Tipo").equals("E")) {
 					e = new Enfermero();
@@ -107,15 +111,16 @@ public class PersonaDAO extends Conexion {
 					e.setTipo(rsObj.getString("Tipo"));
 					e.setInfectado(rsObj.getInt("Infectado"));
 					listaPersonas.add(e);
-
+					Main.logger.info("Añadiendo a la lista la enfermera "+e.getId());
 				}
+				Main.logger.info("Recorriendo lista de personas");
 
 			}
 
 			printDbStatus();
 		} catch (SQLException ex) {
 		//	Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
-			
+			Main.logger.info("Error excepcion SQL "+ex);
 		} finally {
 			desconectar();
 		}
@@ -144,6 +149,7 @@ public class PersonaDAO extends Conexion {
 				pstmtObj.execute();
 				
 				System.out.println("Se ha insertado " + informe.get(i).toString());
+				Main.logger.info("insertando a la tabla personainforme la pacientes enfermos"+e.getId());
 			}
 			
 
@@ -151,6 +157,7 @@ public class PersonaDAO extends Conexion {
 			printDbStatus();
 		} catch (SQLException ex) {
 		//Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+			Main.logger.info("Error excepcion SQL "+ex);
 		} finally {
 			desconectar();
 		}

@@ -21,7 +21,7 @@ public class Main {
 	static ArrayList<Vacunable> listaEnfermero;
 	static ArrayList<PersonaInforme> listaInforme;
 
-	public static Logger logger = LogManager.getLogger(Main.class);
+	public static final Logger logger = LogManager.getLogger(Main.class);
 
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
@@ -60,6 +60,8 @@ public class Main {
 
 		Hilo h = new Hilo(listaInforme);
 		h.start();
+		
+		logger.info("Finalizando el programa");
 
 	}
 
