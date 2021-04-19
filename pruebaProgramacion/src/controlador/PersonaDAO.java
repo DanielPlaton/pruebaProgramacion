@@ -4,14 +4,14 @@ import modelo.Enfermero;
 import modelo.Paciente;
 import modelo.Persona;
 import modelo.PersonaInforme;
+import controlador.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import javax.sql.DataSource;
 
@@ -25,11 +25,13 @@ public class PersonaDAO extends Conexion {
 	Paciente pa;
 	Enfermero e;
 	ArrayList<Persona> listaPersonas;
+	
 
 	public PersonaDAO() throws SQLException {
 		super();
 		// connObj.setAutoCommit(false);
 		listaPersonas = new ArrayList<Persona>();
+
 
 	}
 
@@ -60,7 +62,8 @@ public class PersonaDAO extends Conexion {
 
 			printDbStatus();
 		} catch (SQLException ex) {
-			Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+		//	Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+			
 		} finally {
 			desconectar();
 		}
@@ -106,7 +109,8 @@ public class PersonaDAO extends Conexion {
 
 			printDbStatus();
 		} catch (SQLException ex) {
-			Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+		//	Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+			
 		} finally {
 			desconectar();
 		}
@@ -141,7 +145,7 @@ public class PersonaDAO extends Conexion {
 			
 			printDbStatus();
 		} catch (SQLException ex) {
-			Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+		//Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			desconectar();
 		}
