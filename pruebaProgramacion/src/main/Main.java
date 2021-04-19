@@ -3,6 +3,9 @@ package main;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import controlador.Hilo;
 import controlador.PersonaDAO;
 import modelo.Infectable;
@@ -16,6 +19,7 @@ public class Main {
 	static ArrayList<Infectable> listaPacientes;
 	static ArrayList<Vacunable> listaEnfermero;
 	static ArrayList<PersonaInforme> listaInforme;
+	private static Logger logger = LogManager.getLogger(Main.class);
 
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
