@@ -9,13 +9,19 @@ import modelo.Paciente;
 import modelo.Persona;
 import modelo.PersonaInforme;
 import modelo.Vacunable;
-import controlador.Logger;
+import java.net.URL;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class Main {
 	static ArrayList<Persona> listaPersona;
 	static ArrayList<Infectable> listaPacientes;
 	static ArrayList<Vacunable> listaEnfermero;
 	static ArrayList<PersonaInforme> listaInforme;
+
+	public static Logger logger = LogManager.getLogger(Main.class);
 
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
@@ -25,14 +31,14 @@ public class Main {
 		listaEnfermero = new ArrayList<Vacunable>();
 		listaPacientes = new ArrayList<Infectable>();
 		listaInforme = new ArrayList<PersonaInforme>();
-		
-		Logger logger = new Logger();
-		
-		logger.crearLogger();
-		
-		logger = logger.cogerLogger(Main.class);
-		
-		
+
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		String ruta = "C:\\Users\\Daniel\\Desktop\\pruebaProgramacion\\pruebaProgramacion\\src\\resources\\log4j.properties";
+		URL url = loader.getResource(ruta);
+		PropertyConfigurator.configure(ruta);
+
+		logger.info("Iniciando el programa");
+
 		listaPersona = pDao.buscarUsuarios();
 
 		for (int i = 0; i < listaPersona.size(); i++) {
@@ -45,26 +51,24 @@ public class Main {
 
 			}
 		}
-		
+
 		leerObjetos(listaEnfermero);
 		leerObjetos(listaPacientes);
-		
 
 		listaInforme = simularDia(listaPacientes);
 		imprimeListaInforme(listaInforme);
 
-		Hilo h= new Hilo(listaInforme);
+		Hilo h = new Hilo(listaInforme);
 		h.start();
 
 	}
 
-	
-	  public static void imprimeListaInforme(ArrayList<PersonaInforme> informe) {
-	        for(PersonaInforme o:informe) {
-	            System.out.println(o.toString());
-	        }
-	  }
-	  
+	public static void imprimeListaInforme(ArrayList<PersonaInforme> informe) {
+		for (PersonaInforme o : informe) {
+			System.out.println(o.toString());
+		}
+	}
+
 	public static void leerObjetos(Object o) {
 
 		for (int i = 0; i < ((ArrayList<Object>) o).size(); i++) {
@@ -77,9 +81,8 @@ public class Main {
 	public static ArrayList<PersonaInforme> simularDia(ArrayList<Infectable> listaInfectables) {
 		Paciente p;
 		boolean comprobarInfectado;
-		ArrayList<PersonaInforme> informe= new ArrayList<PersonaInforme>();
-		
-		
+		ArrayList<PersonaInforme> informe = new ArrayList<PersonaInforme>();
+
 		for (int i = 0; i < listaInfectables.size(); i++) {
 			p = (Paciente) listaInfectables.get(i);
 
@@ -114,16 +117,14 @@ public class Main {
 		for (int i = 0; i < listaPacientes.size(); i++) {
 
 			listaEnfermero.get(listaEnfermero.size() - 1).vacunar(listaPacientes.get(i));
-			
-			if(((Paciente) listaInfectables.get(i)).getInfectado()==1){
-				PersonaInforme pi= new PersonaInforme((Paciente)listaPacientes.get(i));
+
+			if (((Paciente) listaInfectables.get(i)).getInfectado() == 1) {
+				PersonaInforme pi = new PersonaInforme((Paciente) listaPacientes.get(i));
 				informe.add(pi);
 			}
-		
 
 		}
 		return informe;
-		
 
 	}
 
