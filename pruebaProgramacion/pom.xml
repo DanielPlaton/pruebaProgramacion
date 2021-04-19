@@ -6,6 +6,10 @@
   <name>pruebaProgramacionMaven</name>
   <description>pruebaProgramacionMaven</description>
   
+    <properties>
+  	<maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
    <dependencies>
     <dependency>
     <groupId>log4j</groupId>
@@ -26,7 +30,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
-          <release>15</release>
+
         </configuration>
       </plugin>
     </plugins>
