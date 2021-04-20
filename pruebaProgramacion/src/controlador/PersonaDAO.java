@@ -12,9 +12,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
+
 
 import javax.sql.DataSource;
+
+import org.apache.log4j.Logger;
 
 
 
@@ -28,6 +30,8 @@ public class PersonaDAO extends Conexion {
 	Paciente pa;
 	Enfermero e;
 	ArrayList<Persona> listaPersonas;
+	
+	public static Logger logger = MyLogger.crearLogger(PersonaDAO.class);
 	 
 	public PersonaDAO() throws SQLException {
 		super();
@@ -62,13 +66,13 @@ public class PersonaDAO extends Conexion {
 				listaPersonas.add(p);
 		
 			}
-			Main.logger.info("Recorriendo lista de personas ");
+			logger.info("Recorriendo lista de personas ");
 
 			
 			printDbStatus();
 		} catch (SQLException ex) {
-		//	Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
-			Main.logger.info("Error excepcion SQL "+ex);
+		//	MyLogger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+			logger.warn("Error excepcion SQL "+ex);
 			
 		} finally {
 			desconectar();
@@ -101,7 +105,8 @@ public class PersonaDAO extends Conexion {
 					pa.setInfectado(rsObj.getInt("Infectado"));
 					listaPersonas.add(pa);
 					
-				Main.logger.info("Añadiendo a la lista los pacientes "+e.getId());
+					logger.info("Añadiendo a la lista la paciente "+pa.getId());
+			
 
 				} else if (rsObj.getString("Tipo").equals("E")) {
 					e = new Enfermero();
@@ -111,16 +116,16 @@ public class PersonaDAO extends Conexion {
 					e.setTipo(rsObj.getString("Tipo"));
 					e.setInfectado(rsObj.getInt("Infectado"));
 					listaPersonas.add(e);
-					Main.logger.info("Añadiendo a la lista la enfermera "+e.getId());
+					logger.info("Añadiendo a la lista la enfermera "+e.getId());
 				}
-				Main.logger.info("Recorriendo lista de personas");
+				logger.info("Recorriendo lista de personas");
 
 			}
 
 			printDbStatus();
 		} catch (SQLException ex) {
-		//	Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
-			Main.logger.info("Error excepcion SQL "+ex);
+		//	MyLogger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+			logger.warn("Error excepcion SQL "+ex);
 		} finally {
 			desconectar();
 		}
@@ -149,15 +154,15 @@ public class PersonaDAO extends Conexion {
 				pstmtObj.execute();
 				
 				System.out.println("Se ha insertado " + informe.get(i).toString());
-				Main.logger.info("insertando a la tabla personainforme la pacientes enfermos"+e.getId());
+				logger.info("insertando a la tabla personainforme la pacientes enfermos"+informe.get(i).getId());
 			}
 			
 
 			
 			printDbStatus();
 		} catch (SQLException ex) {
-		//Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
-			Main.logger.info("Error excepcion SQL "+ex);
+		//MyLogger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+			logger.warn("Error excepcion SQL "+ex);
 		} finally {
 			desconectar();
 		}

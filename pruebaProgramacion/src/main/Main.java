@@ -3,6 +3,7 @@ package main;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import controlador.Hilo;
+import controlador.MyLogger;
 import controlador.PersonaDAO;
 import modelo.Infectable;
 import modelo.Paciente;
@@ -21,7 +22,7 @@ public class Main {
 	static ArrayList<Vacunable> listaEnfermero;
 	static ArrayList<PersonaInforme> listaInforme;
 
-	public static final Logger logger = LogManager.getLogger(Main.class);
+	public static Logger logger = MyLogger.crearLogger(Main.class);
 
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
@@ -32,11 +33,7 @@ public class Main {
 		listaPacientes = new ArrayList<Infectable>();
 		listaInforme = new ArrayList<PersonaInforme>();
 
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		String ruta = "C:\\Users\\Daniel\\Desktop\\pruebaProgramacion\\pruebaProgramacion\\src\\resources\\log4j.properties";
-		URL url = loader.getResource(ruta);
-		PropertyConfigurator.configure(ruta);
-
+		
 		logger.info("Iniciando el programa");
 
 		listaPersona = pDao.buscarUsuarios();
